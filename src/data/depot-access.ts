@@ -15,7 +15,7 @@ export const CONDUIT_INLET: MachineType = {
       "tileIndex": 1,
       "resource": "",
       "kind": "fluid",
-      "rate": 30
+      "rate": 0.5
     }
   ],
   "edgeBands": {},
@@ -37,7 +37,7 @@ export const CONDUIT_INLET_MANIFOLD: MachineType = {
       "tileIndex": 1,
       "resource": "",
       "kind": "fluid",
-      "rate": 30
+      "rate": 0.5
     },
     {
       "id": "port_2",
@@ -46,7 +46,7 @@ export const CONDUIT_INLET_MANIFOLD: MachineType = {
       "tileIndex": 3,
       "resource": "",
       "kind": "fluid",
-      "rate": 30
+      "rate": 0.5
     }
   ],
   "edgeBands": {},
@@ -68,7 +68,7 @@ export const CONDUIT_OUTLET: MachineType = {
       "tileIndex": 1,
       "resource": "",
       "kind": "fluid",
-      "rate": 30
+      "rate": 0.5
     }
   ],
   "recipes": [],
@@ -90,7 +90,7 @@ export const CONDUIT_OUTLET_MANIFOLD: MachineType = {
       "tileIndex": 1,
       "resource": "",
       "kind": "fluid",
-      "rate": 30
+      "rate": 0.5
     },
     {
       "id": "port_2",
@@ -99,7 +99,7 @@ export const CONDUIT_OUTLET_MANIFOLD: MachineType = {
       "tileIndex": 3,
       "resource": "",
       "kind": "fluid",
-      "rate": 30
+      "rate": 0.5
     }
   ],
   "edgeBands": {},
@@ -189,7 +189,7 @@ export const FLUID_TANK: MachineType = {
       "tileIndex": 1,
       "resource": "",
       "kind": "fluid",
-      "rate": 30
+      "rate": 0.5
     },
     {
       "id": "port_2",
@@ -198,7 +198,7 @@ export const FLUID_TANK: MachineType = {
       "tileIndex": 1,
       "resource": "",
       "kind": "fluid",
-      "rate": 30
+      "rate": 0.5
     }
   ],
   "edgeBands": {},
@@ -222,7 +222,7 @@ export const GAS_TANK: MachineType = {
       "tileIndex": 1,
       "resource": "",
       "kind": "fluid",
-      "rate": 30
+      "rate": 0.5
     },
     {
       "id": "port_2",
@@ -231,7 +231,7 @@ export const GAS_TANK: MachineType = {
       "tileIndex": 1,
       "resource": "",
       "kind": "fluid",
-      "rate": 30
+      "rate": 0.5
     }
   ],
   "edgeBands": {},

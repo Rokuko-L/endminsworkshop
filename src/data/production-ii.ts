@@ -50,7 +50,7 @@ export const EXPANDED_CRUCIBLE: MachineType = {
       "tileIndex": 1,
       "resource": "",
       "kind": "fluid",
-      "rate": 30
+      "rate": 0.5
     },
     {
       "id": "port_6",
@@ -59,7 +59,7 @@ export const EXPANDED_CRUCIBLE: MachineType = {
       "tileIndex": 3,
       "resource": "",
       "kind": "fluid",
-      "rate": 30
+      "rate": 0.5
     },
     {
       "id": "port_7",
@@ -104,7 +104,7 @@ export const EXPANDED_CRUCIBLE: MachineType = {
       "tileIndex": 1,
       "resource": "",
       "kind": "fluid",
-      "rate": 30
+      "rate": 0.5
     },
     {
       "id": "port_12",
@@ -113,7 +113,7 @@ export const EXPANDED_CRUCIBLE: MachineType = {
       "tileIndex": 3,
       "resource": "",
       "kind": "fluid",
-      "rate": 30
+      "rate": 0.5
     }
   ],
   "edgeBands": {},
@@ -129,14 +129,14 @@ export const EXPANDED_CRUCIBLE: MachineType = {
         {
           "resource": "Clean Water",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
         {
           "resource": "Jincao Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -152,14 +152,14 @@ export const EXPANDED_CRUCIBLE: MachineType = {
         {
           "resource": "Clean Water",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
         {
           "resource": "Yazhen Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -175,14 +175,14 @@ export const EXPANDED_CRUCIBLE: MachineType = {
         {
           "resource": "Clean Water",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
         {
           "resource": "Liquid Xiranite",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -198,14 +198,14 @@ export const EXPANDED_CRUCIBLE: MachineType = {
         {
           "resource": "Precipitation Acid",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
         {
           "resource": "Liquid Heavy Xiranite",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -221,14 +221,14 @@ export const EXPANDED_CRUCIBLE: MachineType = {
         {
           "resource": "Precipitation Acid",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
         {
           "resource": "Cuprium Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -239,24 +239,24 @@ export const EXPANDED_CRUCIBLE: MachineType = {
         {
           "resource": "Liquid Xiranite",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         },
         {
           "resource": "Sewage",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
         {
           "resource": "Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         },
         {
           "resource": "Inert Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -267,7 +267,7 @@ export const EXPANDED_CRUCIBLE: MachineType = {
         {
           "resource": "Xircon Effluent",
           "kind": "fluid",
-          "rate": 60
+          "rate": 1
         },
         {
           "resource": "Ferrium Powder",
@@ -284,7 +284,7 @@ export const EXPANDED_CRUCIBLE: MachineType = {
         {
           "resource": "Sewage",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -295,7 +295,7 @@ export const EXPANDED_CRUCIBLE: MachineType = {
         {
           "resource": "Hetonite Solution",
           "kind": "fluid",
-          "rate": 60
+          "rate": 1
         },
         {
           "resource": "Ferrium Powder",
@@ -312,7 +312,7 @@ export const EXPANDED_CRUCIBLE: MachineType = {
         {
           "resource": "Sewage",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -487,7 +487,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Clean Water",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -510,7 +510,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Precipitation Acid",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -533,7 +533,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Sewage",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -556,7 +556,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Jincao Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -579,7 +579,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Yazhen Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -602,7 +602,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Liquid Xiranite",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -625,7 +625,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Liquid Heavy Xiranite",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -648,7 +648,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -671,7 +671,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Inert Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -694,7 +694,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Cuprium Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -717,7 +717,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Hetonite Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -740,7 +740,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Clean Water",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -763,7 +763,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Precipitation Acid",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -786,7 +786,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Sewage",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -809,7 +809,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Jincao Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -832,7 +832,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Yazhen Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -855,7 +855,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Liquid Xiranite",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -878,7 +878,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Liquid Heavy Xiranite",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -901,7 +901,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -924,7 +924,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Inert Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -947,7 +947,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Cuprium Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -970,7 +970,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Hetonite Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -993,7 +993,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Clean Water",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1016,7 +1016,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Precipitation Acid",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1039,7 +1039,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Sewage",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1062,7 +1062,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Jincao Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1085,7 +1085,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Yazhen Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1108,7 +1108,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Liquid Xiranite",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1131,7 +1131,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Liquid Heavy Xiranite",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1154,7 +1154,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1177,7 +1177,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Inert Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1200,7 +1200,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Cuprium Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1223,7 +1223,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Hetonite Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1246,7 +1246,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Clean Water",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1269,7 +1269,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Precipitation Acid",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1292,7 +1292,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Sewage",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1315,7 +1315,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Jincao Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1338,7 +1338,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Yazhen Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1361,7 +1361,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Liquid Xiranite",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1384,7 +1384,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Liquid Heavy Xiranite",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1407,7 +1407,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1430,7 +1430,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Inert Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1453,7 +1453,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Cuprium Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1476,7 +1476,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Hetonite Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1499,7 +1499,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Clean Water",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1522,7 +1522,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Precipitation Acid",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1545,7 +1545,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Sewage",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1568,7 +1568,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Jincao Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1591,7 +1591,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Yazhen Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1614,7 +1614,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Liquid Xiranite",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1637,7 +1637,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Liquid Heavy Xiranite",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1660,7 +1660,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1683,7 +1683,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Inert Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1706,7 +1706,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Cuprium Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1729,7 +1729,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Hetonite Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1752,7 +1752,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Clean Water",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1775,7 +1775,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Precipitation Acid",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1798,7 +1798,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Sewage",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1821,7 +1821,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Jincao Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1844,7 +1844,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Yazhen Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1867,7 +1867,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1890,7 +1890,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Inert Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1913,7 +1913,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Cuprium Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1936,7 +1936,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Hetonite Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -1982,7 +1982,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Acridgen",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -2005,7 +2005,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Xiragen",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -2028,7 +2028,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Heavy Xiragen",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -2051,7 +2051,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Inergen",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -2074,7 +2074,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Cuprium Gas",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -2097,7 +2097,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Hetonite Gas",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -2120,7 +2120,7 @@ export const FILLING_UNIT: MachineType = {
         {
           "resource": "Pyrrolite Gas",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -2159,7 +2159,7 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Aquagen",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         },
         {
           "resource": "Liquid Xiranite",
@@ -2172,7 +2172,7 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Clean Water",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -2183,7 +2183,7 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Clean Water",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         },
         {
           "resource": "Liquid Xiranite",
@@ -2196,7 +2196,7 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Aquagen",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -2207,7 +2207,7 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Precipitation Acid",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         },
         {
           "resource": "Liquid Xiranite",
@@ -2220,7 +2220,7 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Acridgen",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -2231,7 +2231,7 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Acridgen",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         },
         {
           "resource": "Liquid Xiranite",
@@ -2244,7 +2244,7 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Precipitation Acid",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -2255,7 +2255,7 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Liquid Xiranite",
           "kind": "fluid",
-          "rate": 30,
+          "rate": 0.5,
           "min": 6
         }
       ],
@@ -2263,7 +2263,7 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Xiragen",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -2274,7 +2274,7 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Xiragen",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         },
         {
           "resource": "Liquid Xiranite",
@@ -2287,7 +2287,7 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Liquid Xiranite",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -2298,7 +2298,7 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Liquid Heavy Xiranite",
           "kind": "fluid",
-          "rate": 12
+          "rate": 0.2
         },
         {
           "resource": "Liquid Xiranite",
@@ -2311,7 +2311,7 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Heavy Xiragen",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 10
@@ -2322,7 +2322,7 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Heavy Xiragen",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         },
         {
           "resource": "Liquid Xiranite",
@@ -2335,7 +2335,7 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Liquid Heavy Xiranite",
           "kind": "fluid",
-          "rate": 12
+          "rate": 0.2
         }
       ],
       "time": 10
@@ -2346,7 +2346,7 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Cuprium Solution",
           "kind": "fluid",
-          "rate": 60
+          "rate": 1
         },
         {
           "resource": "Liquid Xiranite",
@@ -2359,7 +2359,7 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Cuprium Gas",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -2370,7 +2370,7 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Cuprium Gas",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         },
         {
           "resource": "Liquid Xiranite",
@@ -2383,7 +2383,7 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Cuprium Solution",
           "kind": "fluid",
-          "rate": 60
+          "rate": 1
         }
       ],
       "time": 2
@@ -2394,7 +2394,7 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Hetonite Gas",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         },
         {
           "resource": "Liquid Xiranite",
@@ -2407,7 +2407,7 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Hetonite Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -2418,7 +2418,7 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Hetonite Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         },
         {
           "resource": "Liquid Xiranite",
@@ -2431,7 +2431,7 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Hetonite Gas",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -2469,7 +2469,7 @@ export const FORGE_OF_THE_SKY: MachineType = {
         {
           "resource": "Clean Water",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -2493,7 +2493,7 @@ export const FORGE_OF_THE_SKY: MachineType = {
         {
           "resource": "Clean Water",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -2657,19 +2657,19 @@ export const GAS_REACTOR_GLOBE: MachineType = {
         {
           "resource": "Hetonite Gas",
           "kind": "fluid",
-          "rate": 60
+          "rate": 1
         },
         {
           "resource": "Xiragen",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
         {
           "resource": "Pyrrolite Gas",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -3329,7 +3329,7 @@ export const PURIFICATION_UNIT: MachineType = {
       "tileIndex": 1,
       "resource": "",
       "kind": "fluid",
-      "rate": 30
+      "rate": 0.5
     },
     {
       "id": "port_2",
@@ -3338,7 +3338,7 @@ export const PURIFICATION_UNIT: MachineType = {
       "tileIndex": 3,
       "resource": "",
       "kind": "fluid",
-      "rate": 30
+      "rate": 0.5
     },
     {
       "id": "port_3",
@@ -3347,7 +3347,7 @@ export const PURIFICATION_UNIT: MachineType = {
       "tileIndex": 1,
       "resource": "",
       "kind": "fluid",
-      "rate": 30
+      "rate": 0.5
     },
     {
       "id": "port_4",
@@ -3356,7 +3356,7 @@ export const PURIFICATION_UNIT: MachineType = {
       "tileIndex": 3,
       "resource": "",
       "kind": "fluid",
-      "rate": 30
+      "rate": 0.5
     }
   ],
   "edgeBands": {},
@@ -3367,19 +3367,19 @@ export const PURIFICATION_UNIT: MachineType = {
         {
           "resource": "Inert Xircon Effluent",
           "kind": "fluid",
-          "rate": 120
+          "rate": 2
         }
       ],
       "outputs": [
         {
           "resource": "Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         },
         {
           "resource": "Clean Water",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -3390,19 +3390,19 @@ export const PURIFICATION_UNIT: MachineType = {
         {
           "resource": "Cuprium Solution",
           "kind": "fluid",
-          "rate": 120
+          "rate": 2
         }
       ],
       "outputs": [
         {
           "resource": "Hetonite Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         },
         {
           "resource": "Precipitation Acid",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -3414,7 +3414,7 @@ export const PURIFICATION_UNIT: MachineType = {
         {
           "resource": "Xiragen",
           "kind": "fluid",
-          "rate": 60
+          "rate": 1
         },
         {
           "resource": "Separator Core",
@@ -3426,7 +3426,7 @@ export const PURIFICATION_UNIT: MachineType = {
         {
           "resource": "Heavy Xiragen",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -3438,7 +3438,7 @@ export const PURIFICATION_UNIT: MachineType = {
         {
           "resource": "Cuprium Gas",
           "kind": "fluid",
-          "rate": 60
+          "rate": 1
         },
         {
           "resource": "Separator Core",
@@ -3450,7 +3450,7 @@ export const PURIFICATION_UNIT: MachineType = {
         {
           "resource": "Hetonite Gas",
           "kind": "fluid",
-          "rate": 60
+          "rate": 1
         }
       ],
       "time": 2
@@ -3462,7 +3462,7 @@ export const PURIFICATION_UNIT: MachineType = {
         {
           "resource": "Xiragen",
           "kind": "fluid",
-          "rate": 60
+          "rate": 1
         },
         {
           "resource": "Separator Core",
@@ -3474,7 +3474,7 @@ export const PURIFICATION_UNIT: MachineType = {
         {
           "resource": "Heavy Xiragen",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -3485,7 +3485,7 @@ export const PURIFICATION_UNIT: MachineType = {
         {
           "resource": "Cuprium Gas",
           "kind": "fluid",
-          "rate": 60
+          "rate": 1
         },
         {
           "resource": "Separator Core",
@@ -3497,7 +3497,7 @@ export const PURIFICATION_UNIT: MachineType = {
         {
           "resource": "Hetonite Gas",
           "kind": "fluid",
-          "rate": 60
+          "rate": 1
         }
       ],
       "time": 2
@@ -3537,7 +3537,7 @@ export const REACTOR_CRUCIBLE: MachineType = {
       "tileIndex": 1,
       "resource": "",
       "kind": "fluid",
-      "rate": 30
+      "rate": 0.5
     },
     {
       "id": "port_4",
@@ -3546,7 +3546,7 @@ export const REACTOR_CRUCIBLE: MachineType = {
       "tileIndex": 3,
       "resource": "",
       "kind": "fluid",
-      "rate": 30
+      "rate": 0.5
     },
     {
       "id": "port_5",
@@ -3573,7 +3573,7 @@ export const REACTOR_CRUCIBLE: MachineType = {
       "tileIndex": 1,
       "resource": "",
       "kind": "fluid",
-      "rate": 30
+      "rate": 0.5
     },
     {
       "id": "port_8",
@@ -3582,7 +3582,7 @@ export const REACTOR_CRUCIBLE: MachineType = {
       "tileIndex": 3,
       "resource": "",
       "kind": "fluid",
-      "rate": 30
+      "rate": 0.5
     }
   ],
   "edgeBands": {},
@@ -3598,14 +3598,14 @@ export const REACTOR_CRUCIBLE: MachineType = {
         {
           "resource": "Clean Water",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
         {
           "resource": "Jincao Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -3621,14 +3621,14 @@ export const REACTOR_CRUCIBLE: MachineType = {
         {
           "resource": "Clean Water",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
         {
           "resource": "Yazhen Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -3644,14 +3644,14 @@ export const REACTOR_CRUCIBLE: MachineType = {
         {
           "resource": "Clean Water",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
         {
           "resource": "Liquid Xiranite",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -3667,14 +3667,14 @@ export const REACTOR_CRUCIBLE: MachineType = {
         {
           "resource": "Precipitation Acid",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
         {
           "resource": "Liquid Heavy Xiranite",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -3690,14 +3690,14 @@ export const REACTOR_CRUCIBLE: MachineType = {
         {
           "resource": "Precipitation Acid",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
         {
           "resource": "Cuprium Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -3708,24 +3708,24 @@ export const REACTOR_CRUCIBLE: MachineType = {
         {
           "resource": "Liquid Xiranite",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         },
         {
           "resource": "Sewage",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
         {
           "resource": "Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         },
         {
           "resource": "Inert Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -3736,7 +3736,7 @@ export const REACTOR_CRUCIBLE: MachineType = {
         {
           "resource": "Xircon Effluent",
           "kind": "fluid",
-          "rate": 60
+          "rate": 1
         },
         {
           "resource": "Ferrium Powder",
@@ -3753,7 +3753,7 @@ export const REACTOR_CRUCIBLE: MachineType = {
         {
           "resource": "Sewage",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -3764,7 +3764,7 @@ export const REACTOR_CRUCIBLE: MachineType = {
         {
           "resource": "Hetonite Solution",
           "kind": "fluid",
-          "rate": 60
+          "rate": 1
         },
         {
           "resource": "Ferrium Powder",
@@ -3781,7 +3781,7 @@ export const REACTOR_CRUCIBLE: MachineType = {
         {
           "resource": "Sewage",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -3816,7 +3816,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Clean Water",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -3839,7 +3839,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Precipitation Acid",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -3862,7 +3862,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Sewage",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -3885,7 +3885,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Jincao Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -3908,7 +3908,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Yazhen Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -3931,7 +3931,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Liquid Xiranite",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -3954,7 +3954,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Liquid Heavy Xiranite",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -3977,7 +3977,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4000,7 +4000,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Inert Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4023,7 +4023,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Cuprium Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4046,7 +4046,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Hetonite Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4069,7 +4069,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Clean Water",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4092,7 +4092,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Precipitation Acid",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4115,7 +4115,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Sewage",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4138,7 +4138,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Jincao Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4161,7 +4161,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Yazhen Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4184,7 +4184,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Liquid Xiranite",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4207,7 +4207,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Liquid Heavy Xiranite",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4230,7 +4230,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4253,7 +4253,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Inert Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4276,7 +4276,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Cuprium Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4299,7 +4299,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Hetonite Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4322,7 +4322,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Clean Water",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4345,7 +4345,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Precipitation Acid",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4368,7 +4368,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Sewage",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4391,7 +4391,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Jincao Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4414,7 +4414,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Yazhen Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4437,7 +4437,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Liquid Xiranite",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4460,7 +4460,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Liquid Heavy Xiranite",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4483,7 +4483,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4506,7 +4506,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Inert Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4529,7 +4529,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Cuprium Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4552,7 +4552,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Hetonite Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4575,7 +4575,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Clean Water",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4598,7 +4598,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Precipitation Acid",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4621,7 +4621,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Sewage",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4644,7 +4644,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Jincao Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4667,7 +4667,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Yazhen Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4690,7 +4690,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Liquid Xiranite",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4713,7 +4713,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Liquid Heavy Xiranite",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4736,7 +4736,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4759,7 +4759,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Inert Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4782,7 +4782,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Cuprium Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4805,7 +4805,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Hetonite Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4828,7 +4828,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Clean Water",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4851,7 +4851,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Precipitation Acid",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4874,7 +4874,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Sewage",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4897,7 +4897,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Jincao Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4920,7 +4920,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Yazhen Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4943,7 +4943,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Liquid Xiranite",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4966,7 +4966,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Liquid Heavy Xiranite",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -4989,7 +4989,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -5012,7 +5012,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Inert Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -5035,7 +5035,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Cuprium Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -5058,7 +5058,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Hetonite Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -5081,7 +5081,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Clean Water",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -5104,7 +5104,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Precipitation Acid",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -5127,7 +5127,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Sewage",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -5150,7 +5150,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Jincao Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -5173,7 +5173,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Yazhen Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -5196,7 +5196,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Liquid Xiranite",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -5219,7 +5219,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Liquid Heavy Xiranite",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -5242,7 +5242,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -5265,7 +5265,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Inert Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -5288,7 +5288,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Cuprium Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -5311,7 +5311,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Hetonite Solution",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -5357,7 +5357,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Acridgen",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -5380,7 +5380,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Xiragen",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -5403,7 +5403,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Heavy Xiragen",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -5426,7 +5426,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Inergen",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -5449,7 +5449,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Cuprium Gas",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -5472,7 +5472,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Hetonite Gas",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -5495,7 +5495,7 @@ export const SEPARATING_UNIT: MachineType = {
         {
           "resource": "Pyrrolite Gas",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -5527,7 +5527,7 @@ export const SOLID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Xiragen",
           "kind": "fluid",
-          "rate": 30,
+          "rate": 0.5,
           "min": 6
         }
       ],
@@ -5546,7 +5546,7 @@ export const SOLID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Heavy Xiragen",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         },
         {
           "resource": "Xiragen",
@@ -5570,7 +5570,7 @@ export const SOLID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Cuprium Gas",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         },
         {
           "resource": "Xiragen",
@@ -5594,7 +5594,7 @@ export const SOLID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Hetonite Gas",
           "kind": "fluid",
-          "rate": 60
+          "rate": 1
         },
         {
           "resource": "Xiragen",
@@ -5618,7 +5618,7 @@ export const SOLID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Pyrrolite Gas",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         },
         {
           "resource": "Xiragen",
@@ -5655,7 +5655,7 @@ export const SOLID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Xiragen",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -5679,7 +5679,7 @@ export const SOLID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Heavy Xiragen",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 10
@@ -5703,7 +5703,7 @@ export const SOLID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Cuprium Gas",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -5727,7 +5727,7 @@ export const SOLID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Hetonite Gas",
           "kind": "fluid",
-          "rate": 60
+          "rate": 1
         }
       ],
       "time": 2
@@ -5751,7 +5751,7 @@ export const SOLID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Pyrrolite Gas",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2

@@ -156,3 +156,38 @@ export interface Layout {
   machines: MachineInstance[];
   connections: Connection[];
 }
+
+/**
+ * ── Planner ─────────────────────────────────────────────────────────
+ * The auto-planner's intermediate artifact: WHAT to build, before any
+ * of it is placed. Pure data — see src/planner/select.ts.
+ */
+
+/** One production step: a machine type running one recipe, N times. */
+export interface PlannerStep {
+  /** MachineType name (unique catalog key). */
+  machine: string;
+  recipeId: string;
+  count: number;
+}
+
+/** A required material flow between two steps (or from a depot). */
+export interface PlannerEdge {
+  /** Producing step index, or null when sourced from a depot/conduit. */
+  from: number | null;
+  to: number;
+  resource: string;
+  kind: ResourceKind;
+  /** Total per-minute rate all lines for this edge must carry. */
+  perMin: number;
+}
+
+export interface PlannerPlan {
+  target: { resource: string; perMin: number };
+  steps: PlannerStep[];
+  edges: PlannerEdge[];
+  /** Raw inputs the plan expects from depots/conduits. */
+  inputs: { resource: string; kind: ResourceKind; perMin: number }[];
+  /** Non-fatal notes: ambiguous recipe choices, net-negative cycles, surplus. */
+  notes: string[];
+}

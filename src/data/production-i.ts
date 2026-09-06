@@ -284,7 +284,7 @@ export const MOULDING_UNIT: MachineType = {
         {
           "resource": "Inergen",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -400,7 +400,7 @@ export const PLANTING_UNIT: MachineType = {
         {
           "resource": "Clean Water",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -423,7 +423,7 @@ export const PLANTING_UNIT: MachineType = {
         {
           "resource": "Clean Water",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
@@ -912,24 +912,24 @@ export const REFINING_UNIT: MachineType = {
         {
           "resource": "Cuprium Ore",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         },
         {
           "resource": "Clean Water",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [
         {
           "resource": "Cuprium",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         },
         {
           "resource": "Sewage",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "time": 2
@@ -1389,7 +1389,7 @@ export const WATER_TREATMENT_UNIT: MachineType = {
       "tileIndex": 1,
       "resource": "",
       "kind": "fluid",
-      "rate": 30
+      "rate": 0.5
     }
   ],
   "edgeBands": {},
@@ -1400,7 +1400,7 @@ export const WATER_TREATMENT_UNIT: MachineType = {
         {
           "resource": "Sewage",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [],
@@ -1412,7 +1412,7 @@ export const WATER_TREATMENT_UNIT: MachineType = {
         {
           "resource": "Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [],
@@ -1424,7 +1424,7 @@ export const WATER_TREATMENT_UNIT: MachineType = {
         {
           "resource": "Inert Xircon Effluent",
           "kind": "fluid",
-          "rate": 30
+          "rate": 0.5
         }
       ],
       "outputs": [],
