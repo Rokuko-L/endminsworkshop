@@ -124,6 +124,7 @@ update the catalog. `scripts/` and `scraped/` have been removed.
 | [reference/testing.md](reference/testing.md) | Vitest setup, what is covered, how to add tests |
 | [reference/extending.md](reference/extending.md) | How to add a new machine type (the canonical recipe) |
 | [reference/machine-editor.md](reference/machine-editor.md) | The machine editor modal (Import/Export, validation) |
+| [reference/gas-system.md](reference/gas-system.md) | Gas system research: footprints, rates, ports, quirks, and how the planner models them |
 | [reference/agent-playground.md](reference/agent-playground.md) | `window.__ew` agent API + text dumps — how agents (vision or text-only) play/test the editor |
 
 ---

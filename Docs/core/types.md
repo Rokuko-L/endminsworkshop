@@ -14,8 +14,8 @@ from here. All coordinates are **grid tiles** with top-left origin
 | `ResourceKind` | `'item' \| 'fluid'` — categorical type of resource. |
 | `PortDef` | A single-tile port: id, type, side, tileIndex, resource, kind, rate. |
 | `EdgeBand` | A full-edge port zone: type + resourceKind for one side. |
-| `RecipeSlot` | A single resource entry on a recipe input or output. |
-| `Recipe` | N inputs + M outputs + optional craft time. The auto-detect key. |
+| `RecipeSlot` | A single resource entry on a recipe input or output. Optional `min` = per-minute activation floor (gas min-flow inputs). |
+| `Recipe` | N inputs + M outputs + optional craft time, optional `env` (`EnvKind`: `stable \| humid \| acrid \| xiranite`) for Gas Dispersing Unit aura requirements. The auto-detect key. |
 | `MachineType` | A footprint definition: name, width, height, powerRange, noPower, ports, edgeBands, recipes. |
 | `MachineInstance` | A placed machine: id, type, x, y, orientation. |
 | `Connection` | A routed link between two machines: id, from/to, kind, resource, matchedRecipeId, path. |

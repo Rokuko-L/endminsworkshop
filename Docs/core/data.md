@@ -111,14 +111,26 @@ through pipes (120/min), matching the game
 ([Flow Rate](https://endfield.wiki.gg/wiki/Flow_Rate)). Canisters remain
 items.
 
-Gas chain anchors (wiki-derived):
+Gas chain anchors (researched — full findings and source links in
+[reference/gas-system.md](../reference/gas-system.md)):
 
-- **Gas Extractor** — produces Inergen or Xiragen (2/s), needs no power
-  (natural flow extraction), fluid output band on the south edge.
-- **Gas Dispersing Unit** — consumes a gas at a **0.1/s (6/min) minimum**
-  to create environments; excess is wasted. Fluid input band, north edge.
-- Fluid-Gas / Solid-Gas Transmuting Units and the Gas Reactor Globe
-  consume/produce gases in 2s recipes at 30–60/min.
+- **Gas Extractor** — 3x3, produces Inergen or Xiragen at ~20/min
+  (1 gas / 3s, community-measured), needs no power (natural flow
+  extraction), fluid output band on the south edge.
+- **Fluid Pump** — Clean Water at 60/min, requires power, fluid output
+  band on the south edge.
+- **Gas Tank** — Fluid Tank's port layout (fluid in east / out west);
+  buffers 500 units of one gas.
+- **Gas Dispersing Unit** — 3x3; consumes its gas behind a `min: 6`
+  activation floor (0.1/s slot = 6/min); excess is wasted. Maps
+  Inergen → Stable, Aquagen → Humid, Acridgen → Acrid, Xiragen →
+  Xiranite environments in a 13x13 aura. Fluid input band, north edge.
+- **Gas Reactor Globe** — 60/min Hetonite Gas + 30/min Xiragen → 30/min
+  Pyrrolite Gas, recipe flagged `env: "acrid"` (needs an Acrid aura).
+- Fluid-Gas / Solid-Gas Transmuting Units — bidirectional liquid↔gas
+  pairs at 30–60/min, every recipe gated behind a `min: 6` activation
+  slot (Liquid Xiranite / Xiragen respectively — the Solid-Gas unit
+  needs Xiragen even to make Xiragen).
 
 Known gap: some gas consumers (e.g. Filling Unit) still have item-only
 edge bands, so their gas-side recipes are not yet connectable in the

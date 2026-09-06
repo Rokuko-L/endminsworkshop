@@ -41,6 +41,13 @@ Exceeding capacity **clogs** the line.
 - **Cycles** — Kahn's topological sort; machines left in cycles are
   flagged and solved conservatively from whatever flows in from outside
   the cycle. Never crashes.
+- **Gas mode** — recipe slots with a `min` activation floor (per-minute)
+  gate the machine **binary**: fed below the floor → efficiency 0 and an
+  `inactive` warning; at or above it the machine runs, and gas offered
+  past the slot's rate is absorbed and **wasted** (the feeding line never
+  clogs — `consumerDemand` returns unbounded for such slots). See
+  [reference/gas-system.md](../reference/gas-system.md) for the in-game
+  behavior this encodes.
 
 ## FlowReport
 
@@ -48,7 +55,7 @@ Exceeding capacity **clogs** the line.
 interface FlowReport {
   machines: MachineFlow[];      // efficiency, per-slot fed/demand, outputs
   connections: ConnectionFlow[]; // flowPerMin vs capacityPerMin, clogged
-  warnings: FlowWarning[];       // clogged | starved | stalled | cycle
+  warnings: FlowWarning[];       // clogged | starved | stalled | cycle | inactive
 }
 ```
 
@@ -63,10 +70,12 @@ interface FlowReport {
 
 ## Minimum-flow inputs
 
-Some facilities need a small continuous flow to stay active — e.g. the
-Gas Dispersing Unit needs **6/min** of the right gas (excess is wasted,
-a drop below resets the craft). These are ordinary recipe inputs with a
-per-second rate (0.1/s → 6/min); the efficiency math expresses them
-naturally (fed 3/min → 50%).
+Gas machines with a dedicated activation input — the Gas Dispersing Unit
+and both Fluid-/Solid-Gas Transmuting Units, at **6/min** in game — are
+catalog slots with `min: 6` (per-minute). The gate is binary, not
+proportional: fed 3/min means the machine is OFF (efficiency 0, warning
+`inactive`), and feed past the slot's rate is wasted without clogging
+the line. Details and the researched machine data:
+[reference/gas-system.md](../reference/gas-system.md).
 
 Related: [logistics.md](logistics.md) · [recipe-info.md](recipe-info.md) · [grid.md](grid.md)
