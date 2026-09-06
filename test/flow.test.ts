@@ -262,7 +262,7 @@ describe('solveFlow', () => {
       ports: [],
       edgeBands: { south: { type: 'output', resourceKind: 'fluid' } },
       recipes: [
-        { id: 'extract', inputs: [], outputs: [{ resource: 'Inergen', kind: 'fluid', rate: 2 }] },
+        { id: 'extract', inputs: [], outputs: [{ resource: 'Inergen', kind: 'fluid', rate: 1 / 3 }] },
       ],
     };
     const disperser: MachineType = {
@@ -273,7 +273,7 @@ describe('solveFlow', () => {
       ports: [],
       edgeBands: { north: { type: 'input', resourceKind: 'fluid' } },
       recipes: [
-        { id: 'inergen_env', inputs: [{ resource: 'Inergen', kind: 'fluid', rate: 0.1 }], outputs: [] },
+        { id: 'inergen_env', inputs: [{ resource: 'Inergen', kind: 'fluid', rate: 0.1, min: 6 }], outputs: [] },
       ],
     };
     const src = machine(extractor, 'ext', 0, 0);
@@ -285,14 +285,19 @@ describe('solveFlow', () => {
     );
     const report = solveFlow(state);
     const disFlow = report.machines.find((m) => m.machineId === 'dis')!;
-    // 120/min offered of a 6/min minimum → fully satisfied (excess wasted).
+    // 20/min offered of a 6/min minimum → active; the excess 14/min is
+    // wasted at the machine (gas mode), so the line never clogs.
     expect(disFlow.efficiency).toBe(1);
     expect(disFlow.inputs[0]!.demandPerMin).toBe(6);
+    expect(disFlow.inputs[0]!.minPerMin).toBe(6);
+    expect(disFlow.inputs[0]!.fedPerMin).toBe(20);
     const pipe = report.connections.find((c) => c.connectionId === 'pipe')!;
     expect(pipe.capacityPerMin).toBe(120);
-    expect(pipe.flowPerMin).toBe(6);
+    expect(pipe.flowPerMin).toBe(20);
+    expect(pipe.clogged).toBe(false);
 
-    // Starve it: a trickle source delivers below the 6/min minimum.
+    // Starve it: a trickle source delivers below the 6/min minimum —
+    // gas machines gate binary, so the unit is inactive, not throttled.
     const weak: MachineType = {
       ...extractor,
       recipes: [{ id: 'weak', inputs: [], outputs: [{ resource: 'Inergen', kind: 'fluid', rate: 0.05 }] }],
@@ -301,8 +306,64 @@ describe('solveFlow', () => {
     const state2 = makeState([weakSrc, dis], [conn('pipe2', 'ext2', 'dis', 'Inergen', PIPE_RATE, 'fluid')], {});
     const report2 = solveFlow(state2);
     const disFlow2 = report2.machines.find((m) => m.machineId === 'dis')!;
-    expect(disFlow2.efficiency).toBe(0.5);
-    expect(report2.warnings.some((w) => w.kind === 'starved')).toBe(true);
+    expect(disFlow2.efficiency).toBe(0);
+    expect(report2.warnings.some((w) => w.kind === 'inactive')).toBe(true);
+    expect(report2.warnings.some((w) => w.kind === 'starved')).toBe(false);
+  });
+
+  it('gates a transmuting unit off without its Xiragen activation flow', () => {
+    // Solid-Gas Transmuting Unit: needs ≥6/min Xiragen activation even
+    // when its main input (Xiranite) is fully supplied.
+    const transmuter: MachineType = {
+      name: 'Solid-Gas Transmuting Unit',
+      width: 5,
+      height: 5,
+      ports: [],
+      edgeBands: { north: { type: 'output', resourceKind: 'fluid' }, south: { type: 'input', resourceKind: 'fluid' } },
+      recipes: [
+        {
+          id: 'xiranite_to_xiragen',
+          inputs: [
+            { resource: 'Xiranite', kind: 'item', rate: 30 },
+            { resource: 'Xiragen', kind: 'fluid', rate: 0.1, min: 6 },
+          ],
+          outputs: [{ resource: 'Xiragen', kind: 'fluid', rate: 30 }],
+        },
+      ],
+    };
+    const rig: MachineType = {
+      name: 'Mining Rig',
+      width: 1,
+      height: 1,
+      ports: [],
+      edgeBands: { south: { type: 'output', resourceKind: 'item' } },
+      recipes: [{ id: 'mine', inputs: [], outputs: [{ resource: 'Xiranite', kind: 'item', rate: 30 }] }],
+    };
+    const t = machine(transmuter, 't', 4, 0);
+    const state = makeState([machine(rig, 'rig', 0, 0), t], [conn('belt', 'rig', 't', 'Xiranite')], {});
+    const fed = solveFlow(state);
+    const tFlow = fed.machines.find((m) => m.machineId === 't')!;
+    expect(tFlow.efficiency).toBe(0);
+    expect(tFlow.inputs.find((i) => i.resource === 'Xiragen')!.minPerMin).toBe(6);
+    expect(fed.warnings.some((w) => w.kind === 'inactive')).toBe(true);
+
+    // With activation flow present (via a depot assignment on the
+    // transmuter's own output, or simply direct feed), it runs fully.
+    const gasSrc: MachineType = {
+      ...rig,
+      name: 'Gas Source',
+      edgeBands: { south: { type: 'output', resourceKind: 'fluid' } },
+      recipes: [{ id: 'gas', inputs: [], outputs: [{ resource: 'Xiragen', kind: 'fluid', rate: 1 / 3 }] }],
+    };
+    const state2 = makeState(
+      [machine(rig, 'rig2', 0, 0), machine(gasSrc, 'gas', 0, 4), t],
+      [conn('belt2', 'rig2', 't', 'Xiranite'), conn('pipe3', 'gas', 't', 'Xiragen', PIPE_RATE, 'fluid')],
+      {},
+    );
+    const report2 = solveFlow(state2);
+    const tFlow2 = report2.machines.find((m) => m.machineId === 't')!;
+    expect(tFlow2.efficiency).toBe(1);
+    expect(report2.warnings.some((w) => w.kind === 'inactive')).toBe(false);
   });
 
   it('resolves a generic gas pipe to the extractor\'s single output resource', () => {

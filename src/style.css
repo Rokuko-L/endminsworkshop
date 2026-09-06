@@ -599,6 +599,12 @@ legend {
   text-align: right;
 }
 
+.recipe-info-env {
+  font-size: 11px;
+  color: var(--accent-2);
+  font-family: var(--mono);
+}
+
 .recipe-info-table {
   display: grid;
   grid-template-columns: 1fr 1fr;

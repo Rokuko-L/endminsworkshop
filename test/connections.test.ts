@@ -255,3 +255,53 @@ describe('completeDraft direction validation', () => {
     );
   });
 });
+
+describe('gas pipe routing', () => {
+  it('routes a pipe between real gas machines and caps it at 120/min', async () => {
+    const { GAS_EXTRACTOR, GAS_REACTOR_GLOBE } = await import('../src/data/index.ts');
+    const grid = new Grid(30, 20);
+    const ext = makeMachine(GAS_EXTRACTOR, 'ext', 2, 8);
+    const globe = makeMachine(GAS_REACTOR_GLOBE, 'globe', 18, 8);
+    grid.placeMachine(ext);
+    grid.placeMachine(globe);
+    const result = completeDraft(
+      grid,
+      pickedOf(portOf(ext, 'band:south:1')),
+      portOf(globe, 'band:south:1'),
+      [],
+    );
+    if ('error' in result) throw new Error(`expected success, got: ${result.error}`);
+    expect(result.connection.kind).toBe('fluid');
+    expect(result.connection.throughput).toBe(120);
+    // Extractor's two possible outputs (Inergen/Xiragen) leave the
+    // connection generic — the flow solver resolves it per recipe.
+    expect(result.connection.resource).toBe('');
+  });
+
+  it('a pipe may perpendicular-bridge an existing belt but not stack along it', async () => {
+    const { GAS_EXTRACTOR, GAS_DISPERSING_UNIT } = await import('../src/data/index.ts');
+    const grid = new Grid(20, 20);
+    const ext = makeMachine(GAS_EXTRACTOR, 'ext', 2, 8);
+    const dis = makeMachine(GAS_DISPERSING_UNIT, 'dis', 14, 8);
+    grid.placeMachine(ext);
+    grid.placeMachine(dis);
+    // A vertical belt wall between the two gas machines.
+    const belt = [];
+    for (let y = 0; y < 20; y++) belt.push({ x: 9, y });
+    grid.placeConnectionTiles('belt', belt);
+    const beltConn: Connection = {
+      id: 'belt', fromMachineId: 'far', fromPortId: 'p', toMachineId: 'far2', toPortId: 'p',
+      kind: 'item', resource: 'Ore', matchedRecipeId: null, path: belt, throughput: 30,
+    };
+    const result = completeDraft(
+      grid,
+      pickedOf(portOf(ext, 'band:south:1')),
+      portOf(dis, 'band:north:1'),
+      [beltConn],
+    );
+    if ('error' in result) throw new Error(`expected success, got: ${result.error}`);
+    const shared = result.connection.path.filter((t) => t.x === 9);
+    expect(shared.length).toBe(1);
+    expect(isCrossingAt(result.connection.path, belt, shared[0]!)).toBe(true);
+  });
+});

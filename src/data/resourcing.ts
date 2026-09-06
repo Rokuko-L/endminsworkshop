@@ -57,23 +57,45 @@ export const ELECTRIC_MINING_RIG_MK_II: MachineType = {
   ]
 };
 
-/** Fluid Pump */
+/** Fluid Pump
+ *  Pumps Clean Water at 60/min (2u); requires power. Its inlet must sit
+ *  in a water body. See Docs/reference/gas-system.md for sources. */
 export const FLUID_PUMP: MachineType = {
   "name": "Fluid Pump",
   "category": "Resourcing",
   "width": 5,
   "height": 5,
   "ports": [],
-  "edgeBands": {},
-  "recipes": []
+  "edgeBands": {
+    "south": {
+      "type": "output",
+      "resourceKind": "fluid"
+    }
+  },
+  "recipes": [
+    {
+      "id": "recipe_1",
+      "inputs": [],
+      "outputs": [
+        {
+          "resource": "Clean Water",
+          "kind": "fluid",
+          "rate": 1
+        }
+      ]
+    }
+  ]
 };
 
-/** Gas Extractor */
+/** Gas Extractor
+ *  3x3 (Game8), needs no power (natural gas flow), must sit on a Gas
+ *  Vent. Extracts ~20/min (1 gas per 3s, community-measured) — six
+ *  extractors just saturate one 120/min pipe. */
 export const GAS_EXTRACTOR: MachineType = {
   "name": "Gas Extractor",
   "category": "Resourcing",
-  "width": 5,
-  "height": 5,
+  "width": 3,
+  "height": 3,
   "noPower": true,
   "ports": [],
   "edgeBands": {
@@ -90,7 +112,7 @@ export const GAS_EXTRACTOR: MachineType = {
         {
           "resource": "Inergen",
           "kind": "fluid",
-          "rate": 2
+          "rate": 1 / 3
         }
       ]
     },
@@ -101,7 +123,7 @@ export const GAS_EXTRACTOR: MachineType = {
         {
           "resource": "Xiragen",
           "kind": "fluid",
-          "rate": 2
+          "rate": 1 / 3
         }
       ]
     }

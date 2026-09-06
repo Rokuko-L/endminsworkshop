@@ -205,14 +205,35 @@ export const FLUID_TANK: MachineType = {
   "recipes": []
 };
 
-/** Gas Tank */
+/** Gas Tank
+ *  Buffers up to 500 units of a single gas type (Game8); same port
+ *  layout as the Fluid Tank. */
 export const GAS_TANK: MachineType = {
   "name": "Gas Tank",
   "category": "Depot Access",
   "width": 3,
   "height": 3,
   "noPower": true,
-  "ports": [],
+  "ports": [
+    {
+      "id": "port_1",
+      "type": "input",
+      "side": "east",
+      "tileIndex": 1,
+      "resource": "",
+      "kind": "fluid",
+      "rate": 30
+    },
+    {
+      "id": "port_2",
+      "type": "output",
+      "side": "west",
+      "tileIndex": 1,
+      "resource": "",
+      "kind": "fluid",
+      "rate": 30
+    }
+  ],
   "edgeBands": {},
   "recipes": []
 };

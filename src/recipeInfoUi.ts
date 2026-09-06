@@ -70,6 +70,13 @@ export function renderRecipeInfoPanel(
   }
   host.appendChild(inputsRow);
 
+  if (info.recipe.env) {
+    const env = document.createElement('div');
+    env.className = 'recipe-info-env';
+    env.textContent = `Requires ${info.recipe.env} ENV (Gas Dispersing Unit aura)`;
+    host.appendChild(env);
+  }
+
   if (info.efficiency >= 0) {
     const eff = document.createElement('div');
     eff.className = 'recipe-info-eff';
@@ -93,8 +100,9 @@ export function renderRecipeInfoPanel(
     );
     const supply = status ? status.delivered : 0;
     const demand = slot.rate;
+    const floor = slot.min !== undefined ? ` ≥${slot.min}/min` : '';
     table.append(
-      cell(`${slot.resource} (${slot.kind})`),
+      cell(`${slot.resource} (${slot.kind})${floor}`),
       cell(`${supply} | ${demand}`),
     );
   }

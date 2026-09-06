@@ -57,7 +57,20 @@ export interface RecipeSlot {
   kind: ResourceKind;
   /** Per-minute for items, per-second for fluids. */
   rate: number;
+  /**
+   * Minimum activation flow for this slot, per-minute (gas machines with a
+   * dedicated min-flow input: Gas Dispersing Unit, Fluid-/Solid-Gas
+   * Transmuting Units — 6/min in game). Below it the machine is inactive
+   * (binary, not proportional); intake above the slot's rate is absorbed
+   * and wasted instead of clogging the feeding line.
+   */
+  min?: number;
 }
+
+/** Gaseous environment a recipe requires, produced by a Gas Dispersing
+ *  Unit venting the matching gas within its 13x13 area. Informational:
+ *  the solver does not model environment zones spatially. */
+export type EnvKind = 'stable' | 'humid' | 'acrid' | 'xiranite';
 
 export interface Recipe {
   /** Unique id within the machine, e.g. "ferrium_ore_to_ferrium". */
@@ -66,6 +79,9 @@ export interface Recipe {
   outputs: RecipeSlot[];
   /** Optional craft time in seconds. Informational. */
   time?: number;
+  /** Environment the machine must sit in (Gas Dispersing Unit aura).
+   *  Informational — shown in the recipe panel, not solved. */
+  env?: EnvKind;
 }
 
 /** A machine footprint definition, without any placement info. */

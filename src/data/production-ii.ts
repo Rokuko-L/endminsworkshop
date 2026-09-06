@@ -2142,15 +2142,30 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
   "width": 5,
   "height": 5,
   "ports": [],
-  "edgeBands": {},
+  "edgeBands": {
+    "north": {
+      "type": "output",
+      "resourceKind": "fluid"
+    },
+    "south": {
+      "type": "input",
+      "resourceKind": "fluid"
+    }
+  },
   "recipes": [
     {
       "id": "recipe_1",
       "inputs": [
         {
           "resource": "Aquagen",
-          "kind": "item",
+          "kind": "fluid",
           "rate": 30
+        },
+        {
+          "resource": "Liquid Xiranite",
+          "kind": "fluid",
+          "rate": 0.1,
+          "min": 6
         }
       ],
       "outputs": [
@@ -2169,12 +2184,18 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
           "resource": "Clean Water",
           "kind": "fluid",
           "rate": 30
+        },
+        {
+          "resource": "Liquid Xiranite",
+          "kind": "fluid",
+          "rate": 0.1,
+          "min": 6
         }
       ],
       "outputs": [
         {
           "resource": "Aquagen",
-          "kind": "item",
+          "kind": "fluid",
           "rate": 30
         }
       ],
@@ -2187,6 +2208,12 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
           "resource": "Precipitation Acid",
           "kind": "fluid",
           "rate": 30
+        },
+        {
+          "resource": "Liquid Xiranite",
+          "kind": "fluid",
+          "rate": 0.1,
+          "min": 6
         }
       ],
       "outputs": [
@@ -2205,6 +2232,12 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
           "resource": "Acridgen",
           "kind": "fluid",
           "rate": 30
+        },
+        {
+          "resource": "Liquid Xiranite",
+          "kind": "fluid",
+          "rate": 0.1,
+          "min": 6
         }
       ],
       "outputs": [
@@ -2222,7 +2255,8 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Liquid Xiranite",
           "kind": "fluid",
-          "rate": 30
+          "rate": 30,
+          "min": 6
         }
       ],
       "outputs": [
@@ -2241,6 +2275,12 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
           "resource": "Xiragen",
           "kind": "fluid",
           "rate": 30
+        },
+        {
+          "resource": "Liquid Xiranite",
+          "kind": "fluid",
+          "rate": 0.1,
+          "min": 6
         }
       ],
       "outputs": [
@@ -2259,6 +2299,12 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
           "resource": "Liquid Heavy Xiranite",
           "kind": "fluid",
           "rate": 12
+        },
+        {
+          "resource": "Liquid Xiranite",
+          "kind": "fluid",
+          "rate": 0.1,
+          "min": 6
         }
       ],
       "outputs": [
@@ -2277,6 +2323,12 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
           "resource": "Heavy Xiragen",
           "kind": "fluid",
           "rate": 30
+        },
+        {
+          "resource": "Liquid Xiranite",
+          "kind": "fluid",
+          "rate": 0.1,
+          "min": 6
         }
       ],
       "outputs": [
@@ -2295,6 +2347,12 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
           "resource": "Cuprium Solution",
           "kind": "fluid",
           "rate": 60
+        },
+        {
+          "resource": "Liquid Xiranite",
+          "kind": "fluid",
+          "rate": 0.1,
+          "min": 6
         }
       ],
       "outputs": [
@@ -2313,6 +2371,12 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
           "resource": "Cuprium Gas",
           "kind": "fluid",
           "rate": 30
+        },
+        {
+          "resource": "Liquid Xiranite",
+          "kind": "fluid",
+          "rate": 0.1,
+          "min": 6
         }
       ],
       "outputs": [
@@ -2331,6 +2395,12 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
           "resource": "Hetonite Gas",
           "kind": "fluid",
           "rate": 30
+        },
+        {
+          "resource": "Liquid Xiranite",
+          "kind": "fluid",
+          "rate": 0.1,
+          "min": 6
         }
       ],
       "outputs": [
@@ -2349,6 +2419,12 @@ export const FLUID_GAS_TRANSMUTING_UNIT: MachineType = {
           "resource": "Hetonite Solution",
           "kind": "fluid",
           "rate": 30
+        },
+        {
+          "resource": "Liquid Xiranite",
+          "kind": "fluid",
+          "rate": 0.1,
+          "min": 6
         }
       ],
       "outputs": [
@@ -2383,6 +2459,7 @@ export const FORGE_OF_THE_SKY: MachineType = {
   "recipes": [
     {
       "id": "recipe_1",
+      "env": "stable",
       "inputs": [
         {
           "resource": "Carbon",
@@ -2406,6 +2483,7 @@ export const FORGE_OF_THE_SKY: MachineType = {
     },
     {
       "id": "recipe_2",
+      "env": "stable",
       "inputs": [
         {
           "resource": "Stabilized Carbon",
@@ -2476,12 +2554,17 @@ export const FORGE_OF_THE_SKY: MachineType = {
   ]
 };
 
-/** Gas Dispersing Unit */
+/** Gas Dispersing Unit
+ *  3x3 (Game8). Vents a steady gas input into a 13x13 gaseous
+ *  environment around itself: Inergen → Stable, Aquagen → Humid,
+ *  Acridgen → Acrid, Xiragen → Xiranite. Needs ≥6/min (rate 0.1/s) to
+ *  stay active; anything beyond that is wasted. Effect areas of two
+ *  units must not overlap. */
 export const GAS_DISPERSING_UNIT: MachineType = {
   "name": "Gas Dispersing Unit",
   "category": "Production II",
-  "width": 5,
-  "height": 5,
+  "width": 3,
+  "height": 3,
   "noPower": true,
   "ports": [],
   "edgeBands": {
@@ -2493,33 +2576,52 @@ export const GAS_DISPERSING_UNIT: MachineType = {
   "recipes": [
     {
       "id": "inergen_env",
+      "env": "stable",
       "inputs": [
         {
           "resource": "Inergen",
           "kind": "fluid",
-          "rate": 0.1
+          "rate": 0.1,
+          "min": 6
         }
       ],
       "outputs": []
     },
     {
-      "id": "acrid_env",
+      "id": "aquagen_env",
+      "env": "humid",
       "inputs": [
         {
-          "resource": "Hetonite Gas",
+          "resource": "Aquagen",
           "kind": "fluid",
-          "rate": 0.1
+          "rate": 0.1,
+          "min": 6
         }
       ],
       "outputs": []
     },
     {
-      "id": "xiranite_env",
+      "id": "acridgen_env",
+      "env": "acrid",
       "inputs": [
         {
-          "resource": "Pyrrolite Gas",
+          "resource": "Acridgen",
           "kind": "fluid",
-          "rate": 0.1
+          "rate": 0.1,
+          "min": 6
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "id": "xiragen_env",
+      "env": "xiranite",
+      "inputs": [
+        {
+          "resource": "Xiragen",
+          "kind": "fluid",
+          "rate": 0.1,
+          "min": 6
         }
       ],
       "outputs": []
@@ -2527,17 +2629,30 @@ export const GAS_DISPERSING_UNIT: MachineType = {
   ]
 };
 
-/** Gas Reactor Globe */
+/** Gas Reactor Globe
+ *  5x5 (Game8), gas-phase reactions. Its Pyrrolite Gas reaction only
+ *  completes inside an Acrid ENV (a Gas Dispersing Unit venting
+ *  Acridgen nearby). */
 export const GAS_REACTOR_GLOBE: MachineType = {
   "name": "Gas Reactor Globe",
   "category": "Production II",
   "width": 5,
   "height": 5,
   "ports": [],
-  "edgeBands": {},
+  "edgeBands": {
+    "north": {
+      "type": "output",
+      "resourceKind": "fluid"
+    },
+    "south": {
+      "type": "input",
+      "resourceKind": "fluid"
+    }
+  },
   "recipes": [
     {
       "id": "recipe_1",
+      "env": "acrid",
       "inputs": [
         {
           "resource": "Hetonite Gas",
@@ -3294,6 +3409,7 @@ export const PURIFICATION_UNIT: MachineType = {
     },
     {
       "id": "recipe_3",
+      "env": "stable",
       "inputs": [
         {
           "resource": "Xiragen",
@@ -3317,6 +3433,7 @@ export const PURIFICATION_UNIT: MachineType = {
     },
     {
       "id": "recipe_4",
+      "env": "stable",
       "inputs": [
         {
           "resource": "Cuprium Gas",
@@ -3340,6 +3457,7 @@ export const PURIFICATION_UNIT: MachineType = {
     },
     {
       "id": "recipe_5",
+      "env": "stable",
       "inputs": [
         {
           "resource": "Xiragen",
@@ -5392,7 +5510,16 @@ export const SOLID_GAS_TRANSMUTING_UNIT: MachineType = {
   "width": 5,
   "height": 5,
   "ports": [],
-  "edgeBands": {},
+  "edgeBands": {
+    "north": {
+      "type": "output",
+      "resourceKind": "fluid"
+    },
+    "south": {
+      "type": "input",
+      "resourceKind": "fluid"
+    }
+  },
   "recipes": [
     {
       "id": "recipe_1",
@@ -5400,7 +5527,8 @@ export const SOLID_GAS_TRANSMUTING_UNIT: MachineType = {
         {
           "resource": "Xiragen",
           "kind": "fluid",
-          "rate": 30
+          "rate": 30,
+          "min": 6
         }
       ],
       "outputs": [
@@ -5419,6 +5547,12 @@ export const SOLID_GAS_TRANSMUTING_UNIT: MachineType = {
           "resource": "Heavy Xiragen",
           "kind": "fluid",
           "rate": 30
+        },
+        {
+          "resource": "Xiragen",
+          "kind": "fluid",
+          "rate": 0.1,
+          "min": 6
         }
       ],
       "outputs": [
@@ -5437,6 +5571,12 @@ export const SOLID_GAS_TRANSMUTING_UNIT: MachineType = {
           "resource": "Cuprium Gas",
           "kind": "fluid",
           "rate": 30
+        },
+        {
+          "resource": "Xiragen",
+          "kind": "fluid",
+          "rate": 0.1,
+          "min": 6
         }
       ],
       "outputs": [
@@ -5455,6 +5595,12 @@ export const SOLID_GAS_TRANSMUTING_UNIT: MachineType = {
           "resource": "Hetonite Gas",
           "kind": "fluid",
           "rate": 60
+        },
+        {
+          "resource": "Xiragen",
+          "kind": "fluid",
+          "rate": 0.1,
+          "min": 6
         }
       ],
       "outputs": [
@@ -5473,6 +5619,12 @@ export const SOLID_GAS_TRANSMUTING_UNIT: MachineType = {
           "resource": "Pyrrolite Gas",
           "kind": "fluid",
           "rate": 30
+        },
+        {
+          "resource": "Xiragen",
+          "kind": "fluid",
+          "rate": 0.1,
+          "min": 6
         }
       ],
       "outputs": [
@@ -5491,6 +5643,12 @@ export const SOLID_GAS_TRANSMUTING_UNIT: MachineType = {
           "resource": "Xiranite",
           "kind": "item",
           "rate": 30
+        },
+        {
+          "resource": "Xiragen",
+          "kind": "fluid",
+          "rate": 0.1,
+          "min": 6
         }
       ],
       "outputs": [
@@ -5509,6 +5667,12 @@ export const SOLID_GAS_TRANSMUTING_UNIT: MachineType = {
           "resource": "Heavy Xiranite",
           "kind": "item",
           "rate": 12
+        },
+        {
+          "resource": "Xiragen",
+          "kind": "fluid",
+          "rate": 0.1,
+          "min": 6
         }
       ],
       "outputs": [
@@ -5527,6 +5691,12 @@ export const SOLID_GAS_TRANSMUTING_UNIT: MachineType = {
           "resource": "Cuprium",
           "kind": "item",
           "rate": 60
+        },
+        {
+          "resource": "Xiragen",
+          "kind": "fluid",
+          "rate": 0.1,
+          "min": 6
         }
       ],
       "outputs": [
@@ -5545,6 +5715,12 @@ export const SOLID_GAS_TRANSMUTING_UNIT: MachineType = {
           "resource": "Hetonite",
           "kind": "item",
           "rate": 30
+        },
+        {
+          "resource": "Xiragen",
+          "kind": "fluid",
+          "rate": 0.1,
+          "min": 6
         }
       ],
       "outputs": [
@@ -5563,6 +5739,12 @@ export const SOLID_GAS_TRANSMUTING_UNIT: MachineType = {
           "resource": "Pyrrolite",
           "kind": "item",
           "rate": 30
+        },
+        {
+          "resource": "Xiragen",
+          "kind": "fluid",
+          "rate": 0.1,
+          "min": 6
         }
       ],
       "outputs": [

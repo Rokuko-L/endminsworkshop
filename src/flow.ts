@@ -23,6 +23,11 @@ import type { Connection, MachineInstance, Recipe, ResourceKind, RecipeSlot } fr
  *   what the machine consumes clogs the fullest inbound line.
  * - **Cycles** don't crash the solve: cycle members are flagged and
  *   solved conservatively from whatever flows in from outside the cycle.
+ * - **Gas mode**: recipe slots with a `min` activation flow (the 6/min
+ *   gas inputs of the Gas Dispersing Unit and the Fluid-/Solid-Gas
+ *   Transmuting Units) gate the machine binary — below the minimum it is
+ *   inactive (warning `inactive`), and gas offered past the slot's rate
+ *   is absorbed and wasted instead of clogging the feeding line.
  *
  * Warnings: `clogged`, `starved`, `stalled`, `cycle`.
  */
@@ -33,6 +38,8 @@ export interface FlowInput {
   demandPerMin: number;
   fedPerMin: number;
   connections: number;
+  /** Set when the slot gates the machine's activation (gas min-flow). */
+  minPerMin?: number;
 }
 
 export interface FlowOutput {
@@ -64,7 +71,7 @@ export interface ConnectionFlow {
 }
 
 export interface FlowWarning {
-  kind: 'clogged' | 'starved' | 'stalled' | 'cycle';
+  kind: 'clogged' | 'starved' | 'stalled' | 'cycle' | 'inactive';
   /** Machine or connection id the warning is about. */
   subjectId: string;
   message: string;
@@ -120,6 +127,9 @@ function outgoingFor(machineId: string, resource: string, connections: Connectio
  * machines, sinks, or machines with a different recipe) — the capacity
  * of its own outgoing lines carrying it onward, so the flow passes
  * through. Sinks (no outgoing) accept everything.
+ *
+ * A min-flow (activation) slot absorbs without limit: gas fed past the
+ * slot's rate is wasted by the machine rather than clogging the line.
  */
 function consumerDemand(
   target: MachineInstance,
@@ -130,7 +140,7 @@ function consumerDemand(
   const recipe = solver.recipeOf.get(target.id);
   if (recipe && recipe.inputs.length > 0) {
     const slot = recipe.inputs.find((s) => s.resource === resource);
-    if (slot) return ratePerMin(slot);
+    if (slot) return slot.min !== undefined ? Infinity : ratePerMin(slot);
   }
   const out = outgoingFor(target.id, resource, connections);
   if (out.length === 0) return Infinity;
@@ -214,7 +224,10 @@ function outputSupplies(
   });
 }
 
-/** Scarcest-input efficiency and per-slot fed/demand for one machine. */
+/** Scarcest-input efficiency and per-slot fed/demand for one machine.
+ *  A slot with `min` gates activation: below the minimum the machine is
+ *  OFF (binary), never proportionally throttled — that's how the gas
+ *  min-flow inputs behave in game. */
 function inputEfficiency(
   machineId: string,
   recipe: Recipe,
@@ -225,6 +238,19 @@ function inputEfficiency(
   const inputs: FlowInput[] = recipe.inputs.map((slot: RecipeSlot) => {
     const fed = solver.fed.get(machineId)?.get(resKey(slot.kind, slot.resource)) ?? 0;
     const demand = ratePerMin(slot);
+    if (slot.min !== undefined) {
+      if (fed < slot.min - 1e-9) efficiency = 0;
+      return {
+        resource: slot.resource,
+        kind: slot.kind,
+        demandPerMin: demand,
+        fedPerMin: fed,
+        connections: connections.filter(
+          (c) => c.toMachineId === machineId && c.resource === slot.resource && c.kind === slot.kind,
+        ).length,
+        minPerMin: slot.min,
+      };
+    }
     efficiency = Math.min(efficiency, Math.min(fed, demand) / demand);
     return {
       resource: slot.resource,
@@ -338,7 +364,13 @@ export function solveFlow(state: EditorState): FlowReport {
       });
     }
     for (const input of inputs) {
-      if (input.fedPerMin < input.demandPerMin - 1e-9) {
+      if (input.minPerMin !== undefined && input.fedPerMin < input.minPerMin - 1e-9) {
+        warnings.push({
+          kind: 'inactive',
+          subjectId: id,
+          message: `${machine.type.name} is inactive: ${input.resource} fed ${round1(input.fedPerMin)}/min is below the ${round1(input.minPerMin)}/min minimum activation flow.`,
+        });
+      } else if (input.fedPerMin < input.demandPerMin - 1e-9) {
         warnings.push({
           kind: 'starved',
           subjectId: id,
