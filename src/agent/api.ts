@@ -1,6 +1,6 @@
 import { saveDepotAssignments } from '../depot.ts';
 import { grid, state } from '../editor/state.ts';
-import { clearAll, clearConnections, placeMachine, removeConnectionAt, removeMachineAt, rotate, updateOrientationLabel } from '../editor/placement.ts';
+import { clearAll, clearConnections, placeMachine, placeMachineAt, removeConnectionAt, removeMachineAt, renameMachine, rotate, updateOrientationLabel } from '../editor/placement.ts';
 import { isPowered } from '../power.ts';
 import { selectedRecipeFor } from '../recipeInfo.ts';
 import { solveFlow } from '../flow.ts';
@@ -10,9 +10,13 @@ import { handleCanvasClick } from '../editor/click.ts';
 import { loadLcValleyDemo } from '../editor/demo.ts';
 import { redraw } from '../editor/redraw.ts';
 import { statusHistory } from '../editor/status.ts';
+import { setStatus } from '../editor/status.ts';
 import { dumpGridText, dumpLayoutText, snapshotJson } from './dump.ts';
 import { allPortCells } from '../ports.ts';
+import { buildPlan as buildPlanPure } from '../planner/index.ts';
+import { selectProduction as selectProductionPure } from '../planner/select.ts';
 import type { EditorState } from '../layout.ts';
+import type { BuiltPlan, PlannerPolicy, PlannerTarget } from '../planner/index.ts';
 import type { MachineType, Orientation } from '../types.ts';
 
 /**
@@ -41,6 +45,8 @@ export interface AgentApi {
   power(): string;
   recipe(x: number, y: number): string;
   flow(): string;
+  plan(resource: string, rate: number, policyJson?: string): object | string;
+  buildPlan(targetJson: string, policyJson?: string): string;
   demo(): string;
   clearAll(): string;
   clearConnections(): string;
@@ -63,6 +69,11 @@ look:
   recipe(x, y)           recipe panel of the machine at a tile: rates, supply/demand, efficiency
   types(filter?)         catalog entries (name, index, size, category, recipes)
   status()               last status message      history(n?) recent messages
+planner (pure, headless-testable):
+  plan(resource, ratePerMin, policyJson?)  quantify-only: what to build (steps + edges + inputs + notes + diagnostics) as JSON
+  buildPlan(targetJson, policyJson?)  full pipeline: materializes the plan onto the editor grid (place + route) and returns a summary string; dump()/snapshot()/flow() inspect it
+    policyJson is JSON for PlannerPolicy { available?: Record<string,number>, ban?: string[], prefer?: string[], seed?: number }
+    targetJson is JSON for PlannerTarget { resource: string, perMin: number } — or just use plan(resource, rate)
 act:
   place(name, x, y, orientation?)    place machine type by name (0|90|180|270)
   select(name)           select catalog entry (affects click-to-place)
@@ -72,6 +83,7 @@ act:
   remove(x, y)           remove machine or connection at tile (right-click equivalent)
   assignDepot(x, y, resource, kind='item', rate=30)  set depot assignment without the modal
   demo()                 load the LC Valley demo      clearAll()  clearConnections()
+  buildPlan('{"resource":"Xiranite","perMin":30}')  e.g. build a full factory for 30/min Xiranite
 notes:
   - coords are grid tiles, top-left origin, y grows downward
   - connect() clicks pick the nearest port cell within 3 tiles; use ports() for exact cells
@@ -99,6 +111,87 @@ function findType(name: string): { type: MachineType; index: number } | null {
 
 function machineIdAt(x: number, y: number): string | null {
   return grid.getOccupancyAt(x, y);
+}
+
+function parsePolicy(json: string | undefined): PlannerPolicy | string {
+  if (json === undefined || json.trim() === '') return {};
+  try {
+    const parsed: unknown = JSON.parse(json);
+    if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
+      return 'ERROR: policyJson must be a JSON object (PlannerPolicy)';
+    }
+    return parsed as PlannerPolicy;
+  } catch {
+    return 'ERROR: policyJson is not valid JSON';
+  }
+}
+
+function parseTarget(json: string): PlannerTarget | string {
+  const trimmed = json.trim();
+  // Bare resource name defaults to 30/min — the common playground ask.
+  if (!trimmed.startsWith('{')) {
+    return trimmed === '' ? 'ERROR: target is empty — pass a resource name or PlannerTarget JSON' : { resource: trimmed, perMin: 30 };
+  }
+  try {
+    const parsed: unknown = JSON.parse(trimmed);
+    if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
+      return 'ERROR: targetJson must be a JSON PlannerTarget { resource, perMin }';
+    }
+    const t = parsed as { resource?: unknown; perMin?: unknown };
+    if (typeof t.resource !== 'string' || t.resource.trim() === '') {
+      return 'ERROR: targetJson.resource must be a non-empty string';
+    }
+    if (typeof t.perMin !== 'number' || !(t.perMin > 0)) {
+      return 'ERROR: targetJson.perMin must be a positive number';
+    }
+    return { resource: t.resource, perMin: t.perMin };
+  } catch {
+    return 'ERROR: targetJson is not valid JSON';
+  }
+}
+
+/** Place the built plan's machines + connections onto the live grid. */
+function materializeBuiltPlan(built: BuiltPlan): string {
+  clearAll();
+  let placedCount = 0;
+  const failed: string[] = [];
+  for (const p of built.placed.placements) {
+    const idx = state.machineTypes.findIndex((t) => t.name === p.machine.type.name);
+    if (idx === -1) {
+      failed.push(`${p.machine.type.name} (not in catalog)`);
+      continue;
+    }
+    state.selectedIndex = idx;
+    state.orientation = p.machine.orientation;
+    // Drive the same placement path as the UI (grid + status + redraw).
+    const before = state.machines.length;
+    placeMachineAt(p.machine.x, p.machine.y);
+    if (state.machines.length === before) {
+      failed.push(`${p.machine.type.name} at (${p.machine.x},${p.machine.y})`);
+      continue;
+    }
+    // Re-key the placed machine to the plan's node id so connections
+    // resolve — placeMachineAt mints a fresh id.
+    const minted = state.machines[state.machines.length - 1]!;
+    renameMachine(minted.id, p.machine.id);
+    placedCount++;
+  }
+  for (const c of built.routed.connections) {
+    state.connections.push({ ...c });
+    grid.placeConnectionTiles(c.id, c.path);
+  }
+  redraw();
+  const diagCount = built.routed.diagnostics.length;
+  const warnCount = built.report.warnings.length;
+  const bits = [
+    `built ${built.plan.target.resource} ${built.plan.target.perMin}/min: ${placedCount} machine(s), ${built.routed.connections.length} connection(s), ${built.width}×${built.height} grid`,
+    `steps: ${built.plan.steps.map((s) => `${s.count}× ${s.machine}`).join(' + ')}`,
+  ];
+  if (failed.length > 0) bits.push(`failed to place: ${failed.join('; ')}`);
+  if (diagCount > 0) bits.push(`${diagCount} routing diagnostic(s) — see snapshot`);
+  if (warnCount > 0) bits.push(`${warnCount} flow warning(s) — run flow()`);
+  setStatus(bits[0]!);
+  return bits.join('\n');
 }
 
 function typeSummary(t: MachineType, index: number): string {
@@ -279,6 +372,22 @@ function buildApi(): AgentApi {
         lines.push('[warnings] (none)');
       }
       return lines.join('\n');
+    },
+
+    plan: (resource, rate, policyJson) => {
+      const policy = parsePolicy(policyJson);
+      if (typeof policy === 'string') return policy;
+      return selectProductionPure({ resource, perMin: rate }, policy, state.machineTypes);
+    },
+
+    buildPlan: (targetJson, policyJson) => {
+      const target = parseTarget(targetJson);
+      if (typeof target === 'string') return target;
+      const policy = parsePolicy(policyJson);
+      if (typeof policy === 'string') return policy;
+      const built = buildPlanPure(target, policy, state.machineTypes);
+      if ('error' in built) return `ERROR: ${built.error}`;
+      return materializeBuiltPlan(built);
     },
 
     demo: () => {

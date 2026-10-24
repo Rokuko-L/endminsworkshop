@@ -11,6 +11,7 @@ export function completeDraft(
   source: PickedPort,
   target: PortCell,
   existingConnections: Connection[] = [],
+  explicitResource?: string,
 ): { connection: Connection; interior: { x: number; y: number }[] } | { error: string } {
   if (source.machine.id === target.machine.id) return { error: 'Cannot connect a machine to itself.' };
   if (source.type !== 'output') {
@@ -46,7 +47,7 @@ export function completeDraft(
   const fromCellIndex = source.adjacentTiles.findIndex((t) => t.x === fromTile.x && t.y === fromTile.y);
   const toCellIndex = target.adjacentTiles.findIndex((t) => t.x === toTile.x && t.y === toTile.y);
   return {
-    connection: buildConnection(source, fromCellIndex, target, toCellIndex, path, existingConnections),
+    connection: buildConnection(source, fromCellIndex, target, toCellIndex, path, existingConnections, explicitResource),
     interior: path,
   };
 }
@@ -92,6 +93,7 @@ function buildConnection(
   toCellIndex: number,
   path: { x: number; y: number }[],
   existingConnections: Connection[],
+  explicitResource?: string,
 ): Connection {
   const fromPortId =
     fromCellIndex >= 0 && source.portId.startsWith('band:')
@@ -101,7 +103,7 @@ function buildConnection(
     toCellIndex >= 0 && target.portId.startsWith('band:')
       ? `band:${target.portId.slice('band:'.length)}:${toCellIndex}`
       : target.portId;
-  const explicit = source.resource?.trim() || target.resource?.trim() || '';
+  const explicit = explicitResource?.trim() || source.resource?.trim() || target.resource?.trim() || '';
   const resolvedResource = explicit || inferredSourceResource(source, existingConnections);
   const recipe = resolvedResource.trim() ? matchRecipe(target.machine, resolvedResource.trim(), source.kind) : null;
   // Throughput from the transport constants, per minute (belts 30, pipes 120).

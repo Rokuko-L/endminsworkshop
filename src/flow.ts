@@ -280,14 +280,18 @@ export function solveFlow(state: EditorState): FlowReport {
   };
   for (const m of state.machines) solver.fed.set(m.id, new Map());
 
-  // Active recipe per machine: best-fed by current inbound, falling back
-  // to the machine's first recipe (it will produce once fed).
+  // Active recipe per machine: best-fed by current inbound, evidence
+  // from outbound lines (what the machine is expected to emit), falling
+  // back to the machine's first recipe (it will produce once fed).
   for (const m of state.machines) {
     const inbound = connections.filter((c) => c.toMachineId === m.id);
+    const outbound = connections.filter((c) => c.fromMachineId === m.id);
     const recipe =
       m.type.recipes.length === 0
         ? null
-        : (inbound.length > 0 ? selectBestRecipe(m.type, inbound) : null) ?? m.type.recipes[0]!;
+        : (inbound.length > 0 || outbound.length > 0
+            ? selectBestRecipe(m.type, inbound, outbound)
+            : null) ?? m.type.recipes[0]!;
     solver.recipeOf.set(m.id, recipe);
   }
 
@@ -305,8 +309,10 @@ export function solveFlow(state: EditorState): FlowReport {
   // generic edge picks the recipe its actual resource activates.
   for (const m of state.machines) {
     const inbound = graph.filter((c) => c.toMachineId === m.id);
-    if (m.type.recipes.length === 0 || inbound.length === 0) continue;
-    solver.recipeOf.set(m.id, selectBestRecipe(m.type, inbound) ?? m.type.recipes[0]!);
+    if (m.type.recipes.length === 0) continue;
+    const outbound = graph.filter((c) => c.fromMachineId === m.id);
+    if (inbound.length === 0 && outbound.length === 0) continue;
+    solver.recipeOf.set(m.id, selectBestRecipe(m.type, inbound, outbound) ?? m.type.recipes[0]!);
   }
 
   // Topological order (Kahn). Cycle members are appended at the end and

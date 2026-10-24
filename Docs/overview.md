@@ -41,20 +41,28 @@ src/
   layout.ts       // Editor state types (EditorState, PickedPort, PortCell, DepotAssignment)
   ids.ts          // nextId — UUID with seeded fallback
   renderer.ts     // Canvas drawing (grid, connections, machines, ports, hover, draft)
+  planner/        // Deterministic factory synthesis (see core/planner.md)
+    types.ts        // Canonical artifact shapes + PlannerPolicy/Diagnostics/Five-artifact IDs
+    select.ts       // Backward-chain quantifier: target+policy → Plan (steps+edges+inputs+notes+diagnostics)
+    expand.ts       // Plan → Network: per-machine nodes (fill-first load) + per-line fan-out
+    layout.ts       // Network (+Plan layers) → Placed: rows, depot layer, 0/180 orientation search, fresh Grid
+    route.ts        // Placed+Network → Routed: pure assignPorts then criticality-ordered completeDraft on a scratch Grid
+    validate.ts     // Placed+Network+Routed → Report: solveFlow mapped back to per-step/per-node efficiency
+    index.ts        // Composition root: buildPlan(target, policy) → { plan, network, placed, routed, report }
   editor/         // Editor wiring split from main.ts (composition root)
     state.ts        // Grid, EditorState, selectedMachine, renderer
     status.ts       // setStatus + status history (agent-readable log)
     metrics.ts      // boundingBoxArea, updateMetrics
     canvas.ts       // eventToTile
     selection.ts    // refreshRecipeInfo
-    placement.ts    // placeMachine, removeMachineAt, clearAll, populateSelector, rotate
+    placement.ts    // placeMachine / placeMachineAt / renameMachine, removeMachineAt, clearAll, populateSelector, rotate
     connect.ts      // handleDepotClick, handleConnectClick, setMode
     click.ts        // handleCanvasClick — shared by mouse clicks and the agent API
     demo.ts         // loadLcValleyDemo
     redraw.ts       // redraw
   agent/          // Agent playground (see reference/agent-playground.md)
     dump.ts         // Pure text view of the layout: ASCII map, tables, JSON snapshot
-    api.ts          // installAgentApi — window.__ew text-in/text-out actions
+    api.ts          // installAgentApi — window.__ew text-in/text-out actions (plan/buildPlan over planner/index.ts)
   machineEditor/  // Define Machines modal (split from machineEditor.ts)
     index.ts        // openMachineEditor (overlay + toolbar)
     grouping.ts     // groupByCategory
@@ -75,6 +83,7 @@ src/
     recipes.test.ts
     connections.test.ts
     agentDump.test.ts
+    planner.test.ts   // select → expand → layout → assignPorts/route → buildPlan/validate
 ```
 
 **Data flow:**
@@ -113,6 +122,7 @@ update the catalog. `scripts/` and `scraped/` have been removed.
 | [core/geometry.md](core/geometry.md) | Port rotation rules and the tile-index mirror |
 | [core/pathfinding.md](core/pathfinding.md) | A* on free cells, obstacle model, algorithm notes |
 | [core/renderer.md](core/renderer.md) | Canvas drawing conventions, colors, and DPI scaling |
+| [core/planner.md](core/planner.md) | Planner synthesis: Plan → Network → Placed → Routed → Report |
 | [core/power.md](core/power.md) | Power AoE system: pylons, relays, powered status |
 | [core/logistics.md](core/logistics.md) | Transport constants, crossing rules, one-direction-per-tile invariant |
 | [core/flow.md](core/flow.md) | Static flow solver: efficiency propagation, split/merge, warnings, gas rates |

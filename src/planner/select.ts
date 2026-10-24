@@ -1,12 +1,14 @@
 import { ratePerMin } from '../logistics.ts';
 import { ALL_MACHINE_TYPES } from '../data/index.ts';
+import type { MachineType, Recipe } from '../types.ts';
 import type {
-  MachineType,
+  PlannerDiagnostic,
   PlannerEdge,
   PlannerPlan,
+  PlannerPolicy,
   PlannerStep,
-  Recipe,
-} from '../types.ts';
+} from './types.ts';
+import type { PlannerTarget } from './types.ts';
 
 /**
  * Backward-chaining production quantifier: given a desired output rate,
@@ -27,11 +29,6 @@ import type {
  *   (RecipeSlot.min) and byproduct outputs propagate. A hard iteration
  *   guard turns genuinely divergent cycles into a note instead of a hang.
  */
-
-export interface PlannerTarget {
-  resource: string;
-  perMin: number;
-}
 
 interface Expansion {
   machine: MachineType;
@@ -78,9 +75,10 @@ function outputRateFor(recipe: Recipe, resource: string): number {
 }
 
 /**
- * Pick one recipe for a resource. Preference order: recipes that don't
- * feed on themselves or on a chain that does (net-positive cycles only),
- * then fully-producible inputs, then lower total input rate, then smaller
+ * Pick one recipe for a resource. Preference order: banned machines
+ * excluded, preferred machines first, then recipes that don't feed on
+ * themselves or on a chain that does (net-positive cycles only), then
+ * fully-producible inputs, then lower total input rate, then smaller
  * footprint, then catalog order — deterministic in every tie.
  */
 function chooseRecipe(
@@ -88,7 +86,9 @@ function chooseRecipe(
   options: ProducerOption[],
   producers: Map<string, ProducerOption[]>,
   available: Map<string, number>,
+  policy: PlannerPolicy,
   notes: string[],
+  diagnostics: PlannerDiagnostic[],
 ): ProducerOption | null {
   const feedsOnSelf = (option: ProducerOption): boolean => {
     if (option.recipe.inputs.some((i) => i.resource === resource)) return true;
@@ -103,8 +103,18 @@ function chooseRecipe(
   const isProducible = (resourceName: string): boolean =>
     producers.has(resourceName) || (available.get(resourceName) ?? 0) > 0;
 
-  const scored = options.map((option) => ({
+  const banned = new Set((policy.ban ?? []).map((n) => n.toLowerCase()));
+  const preferOrder = new Map((policy.prefer ?? []).map((n, i) => [n.toLowerCase(), i]));
+  const viable = options.filter((o) => !banned.has(o.machine.name.toLowerCase()));
+  if (viable.length === 0) {
+    const msg = `${resource}: all producers are banned — treating as raw input.`;
+    notes.push(msg);
+    diagnostics.push({ code: 'no-producer', resource, message: msg });
+    return null;
+  }
+  const scored = viable.map((option) => ({
     option,
+    preferred: preferOrder.get(option.machine.name.toLowerCase()) ?? Number.MAX_SAFE_INTEGER,
     selfFeeding: feedsOnSelf(option),
     producible: option.recipe.inputs.every((i) => isProducible(i.resource)),
     inputRate: option.recipe.inputs.reduce((a, i) => a + ratePerMin(i), 0),
@@ -113,6 +123,7 @@ function chooseRecipe(
   }));
   scored.sort(
     (a, b) =>
+      a.preferred - b.preferred ||
       Number(a.selfFeeding) - Number(b.selfFeeding) ||
       Number(b.producible) - Number(a.producible) ||
       a.inputRate - b.inputRate ||
@@ -121,11 +132,15 @@ function chooseRecipe(
   );
   const best = scored[0]!;
   if (best.selfFeeding) {
-    notes.push(`${resource}: only net-cycle recipes available — counts assume the loop sustains itself.`);
+    const msg = `${resource}: only net-cycle recipes available — counts assume the loop sustains itself.`;
+    notes.push(msg);
+    diagnostics.push({ code: 'net-cycle', resource, message: msg });
   }
-  if (options.length > 1) {
+  if (viable.length > 1) {
     const others = scored.slice(1).map((s) => s.option.machine.name).join(', ');
-    notes.push(`${resource}: chose ${best.option.machine.name}; alternatives: ${others}.`);
+    const msg = `${resource}: chose ${best.option.machine.name}; alternatives: ${others}.`;
+    notes.push(msg);
+    diagnostics.push({ code: 'recipe-choice', resource, message: msg });
   }
   return best.option;
 }
@@ -137,15 +152,18 @@ function chooseRecipe(
  */
 export function selectProduction(
   target: PlannerTarget,
-  available: Record<string, number> = {},
+  available: Record<string, number> | PlannerPolicy = {},
   machineTypes: MachineType[] = ALL_MACHINE_TYPES,
 ): PlannerPlan {
+  const policy: PlannerPolicy = isPolicy(available) ? available : { available };
+  const seed = policy.seed ?? 0;
   const producers = producerIndex(machineTypes);
-  const surplus = new Map<string, number>(Object.entries(available));
+  const surplus = new Map<string, number>(Object.entries(policy.available ?? {}));
   const requiredInputs = new Map<string, { kind: 'item' | 'fluid'; perMin: number }>();
   const steps: Expansion[] = [];
   const stepByResource = new Map<string, number>();
   const notes: string[] = [];
+  const diagnostics: PlannerDiagnostic[] = [];
   const queue: { resource: string; perMin: number; ancestors: Set<string> }[] = [
     { ...target, ancestors: new Set() },
   ];
@@ -183,9 +201,9 @@ export function selectProduction(
     enqueue: { resource: string; perMin: number; ancestors: Set<string> }[],
   ): void => {
     if (ex.netPerMachine <= 1e-9) {
-      notes.push(
-        `${ex.forResource}: recipe does not net-produce its output — step cannot be quantified.`,
-      );
+      const msg = `${ex.forResource}: recipe does not net-produce its output — step cannot be quantified.`;
+      notes.push(msg);
+      diagnostics.push({ code: 'unquantified', resource: ex.forResource, message: msg });
       return;
     }
     const newCount = Math.ceil(ex.demand / ex.netPerMachine - 1e-9);
@@ -218,7 +236,9 @@ export function selectProduction(
   let guard = 0;
   while (queue.length > 0) {
     if (++guard > 500) {
-      notes.push('expansion did not converge — divergent recipe cycle; remaining demands truncated.');
+      const msg = 'expansion did not converge — divergent recipe cycle; remaining demands truncated.';
+      notes.push(msg);
+      diagnostics.push({ code: 'divergent', message: msg });
       break;
     }
     const demand = queue.shift()!;
@@ -229,7 +249,9 @@ export function selectProduction(
     // upstream is the loop feeding itself, not new external demand —
     // the upstream step's count already sizes the loop. Skip it.
     if (demand.ancestors.has(demand.resource)) {
-      notes.push(`${demand.resource}: demand closes a recycle loop — loop throughput follows the producing step.`);
+      const msg = `${demand.resource}: demand closes a recycle loop — loop throughput follows the producing step.`;
+      notes.push(msg);
+      diagnostics.push({ code: 'recycle-loop', resource: demand.resource, message: msg });
       continue;
     }
 
@@ -251,32 +273,43 @@ export function selectProduction(
     // 3. Choose a producer, else it's a raw depot input.
     const options = producers.get(demand.resource) ?? [];
     if (options.length === 0) {
-      const cur = requiredInputs.get(demand.resource) ?? {
+      const existed = requiredInputs.get(demand.resource);
+      const cur = existed ?? {
         kind: guessKind(machineTypes, demand.resource),
         perMin: 0,
       };
       cur.perMin += demand.perMin;
       requiredInputs.set(demand.resource, cur);
+      if (!existed) {
+        diagnostics.push({ code: 'raw-input', resource: demand.resource, perMin: round1(cur.perMin), message: `${demand.resource}: no catalog producer — depot input.` });
+      }
       continue;
     }
-    const choice = chooseRecipe(demand.resource, options, producers, surplus, notes);
+    const choice = chooseRecipe(demand.resource, options, producers, surplus, policy, notes, diagnostics);
     if (!choice) {
-      notes.push(`${demand.resource}: no viable recipe found.`);
+      const msg = `${demand.resource}: no viable recipe found.`;
+      notes.push(msg);
+      diagnostics.push({ code: 'no-producer', resource: demand.resource, message: msg });
       continue;
     }
     expand(demand.resource, demand.perMin, choice, demand.ancestors);
   }
 
+  const availRecord = policy.available ?? {};
   for (const [resource, left] of surplus) {
-    if (left > 1e-9 && !(resource in available)) {
-      notes.push(`plan overproduces ${resource} by ${round1(left)}/min — route it to a sink or depot.`);
+    if (left > 1e-9 && !(resource in availRecord)) {
+      const msg = `plan overproduces ${resource} by ${round1(left)}/min — route it to a sink or depot.`;
+      notes.push(msg);
+      diagnostics.push({ code: 'overproduce', resource, perMin: round1(left), message: msg });
     }
   }
 
-  const planSteps: PlannerStep[] = steps.map((s) => ({
+  const planSteps: PlannerStep[] = steps.map((s, i) => ({
+    id: `step-${i}`,
     machine: s.machine.name,
     recipeId: s.recipe.id,
     count: s.count,
+    loadPerMachine: loadsFor(s.count, s.demand, s.netPerMachine),
   }));
 
   const planEdges: PlannerEdge[] = [];
@@ -286,9 +319,9 @@ export function selectProduction(
       const perMin = ex.count * ratePerMin(slot);
       const fromIdx = stepByResource.get(slot.resource);
       if (fromIdx !== undefined) {
-        planEdges.push({ from: fromIdx, to: toIdx, resource: slot.resource, kind: slot.kind, perMin });
+        planEdges.push({ id: '', from: fromIdx, to: toIdx, fromStepId: '', toStepId: '', resource: slot.resource, kind: slot.kind, perMin });
       } else {
-        planEdges.push({ from: null, to: toIdx, resource: slot.resource, kind: slot.kind, perMin });
+        planEdges.push({ id: '', from: null, to: toIdx, fromStepId: null, toStepId: '', resource: slot.resource, kind: slot.kind, perMin });
       }
     }
   }
@@ -300,18 +333,43 @@ export function selectProduction(
     if (cur) cur.perMin += e.perMin;
     else merged.set(k, { ...e });
   }
+  const edges = [...merged.values()].map((e, i) => ({
+    ...e,
+    id: `edge-${i}`,
+    fromStepId: e.from === null ? null : `step-${e.from}`,
+    toStepId: `step-${e.to}`,
+    perMin: round1(e.perMin),
+  }));
 
   return {
+    version: 1,
+    seed,
     target: { ...target },
     steps: planSteps,
-    edges: [...merged.values()],
+    edges,
     inputs: [...requiredInputs.entries()].map(([resource, v]) => ({
       resource,
       kind: v.kind,
       perMin: round1(v.perMin),
     })),
     notes,
+    diagnostics,
   };
+}
+
+function loadsFor(count: number, demand: number, net: number): number[] {
+  if (count <= 0) return [];
+  const full = count - 1;
+  const remainder = demand - full * net;
+  const loads: number[] = [];
+  for (let i = 0; i < full; i++) loads.push(1);
+  loads.push(Math.min(1, Math.max(0, remainder / net) || 1));
+  return loads.map((v) => Math.round(v * 1000) / 1000);
+}
+
+function isPolicy(v: Record<string, number> | PlannerPolicy): v is PlannerPolicy {
+  const r = v as PlannerPolicy;
+  return 'available' in r || 'ban' in r || 'prefer' in r || 'weights' in r || 'seed' in r;
 }
 
 function guessKind(machineTypes: MachineType[], resource: string): 'item' | 'fluid' {

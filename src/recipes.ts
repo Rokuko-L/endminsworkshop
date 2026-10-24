@@ -26,26 +26,45 @@ export function matchRecipe(
 }
 
 /**
- * Pick the recipe that the current inbound connections actually feed:
- * the one with the most distinct input slots receiving a matching
- * connection. Machines like the Packaging Unit share inputs across
- * recipes (Amethyst Part feeds both Industrial Explosive and LC Valley
- * Battery), so "first recipe containing the resource" picks the wrong
- * craft — counting fed slots disambiguates.
+ * Pick the recipe that the current inbound/outbound connections imply:
+ * input side — most distinct fed slots wins (machines like the
+ * Packaging Unit share inputs across recipes); ties prefer fully-fed
+ * recipes (a bidirectional transmuter fed only Xiragen matches both
+ * Xiragen→Xiranite and Xiranite→Xiragen — fully-fed wins).
+ * Output side — recipes whose outputs match outbound resources outrank
+ * the rest (a source machine with no inbound, like the Gas Extractor
+ * wired for Xiragen, must not fall back to Inergen).
  */
 export function selectBestRecipe(
   type: MachineType,
   inbound: Connection[],
+  outbound: Connection[] = [],
 ): Recipe | null {
+  const outboundResources = new Set(
+    outbound.filter((c) => c.resource.trim() !== '').map((c) => c.resource),
+  );
   let best: Recipe | null = null;
-  let bestFed = 0;
+  let bestOut = -1;
+  let bestFed = -1;
+  let bestFullyFed = false;
   for (const recipe of type.recipes) {
+    if (recipe.inputs.length === 0 && recipe.outputs.length === 0) continue;
     const fed = recipe.inputs.filter((slot) =>
       inbound.some((c) => c.resource === slot.resource && c.kind === slot.kind),
     ).length;
-    if (fed > bestFed) {
+    const fullyFed = recipe.inputs.length > 0 && fed === recipe.inputs.length;
+    const out = [...outboundResources].filter((r) =>
+      recipe.outputs.some((o) => o.resource === r),
+    ).length;
+    if (
+      out > bestOut ||
+      (out === bestOut && fed > bestFed) ||
+      (out === bestOut && fed === bestFed && fullyFed && !bestFullyFed)
+    ) {
       best = recipe;
+      bestOut = out;
       bestFed = fed;
+      bestFullyFed = fullyFed;
     }
   }
   return best;

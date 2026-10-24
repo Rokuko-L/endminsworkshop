@@ -19,6 +19,16 @@ export function rotate(): void {
 }
 
 export function placeMachine(x: number, y: number): void {
+  placeMachineAt(x, y);
+}
+
+/**
+ * Place the selected type at (x, y), returning the new machine or null
+ * when the footprint is blocked. `placeMachine` wraps this with the
+ * status/redraw/error-flash behavior the click path needs; headless
+ * callers (agent buildPlan) use the return value directly.
+ */
+export function placeMachineAt(x: number, y: number): MachineInstance | null {
   const type = selectedType();
   const isRot = state.orientation === 90 || state.orientation === 270;
   const effW = isRot ? type.height : type.width;
@@ -31,7 +41,7 @@ export function placeMachine(x: number, y: number): void {
       state.invalidFlash = null;
       redraw();
     }, 350);
-    return;
+    return null;
   }
   const machine: MachineInstance = {
     id: nextId('machine'),
@@ -44,6 +54,30 @@ export function placeMachine(x: number, y: number): void {
   state.machines.push(machine);
   setStatus(`Placed ${type.name} at (${x}, ${y}) ${state.orientation}°.`);
   redraw();
+  return machine;
+}
+
+/**
+ * Re-key a placed machine (grid occupancy + state + connections +
+ * depot assignment) so a headless build can use plan-stable node ids.
+ */
+export function renameMachine(oldId: string, newId: string): boolean {
+  const machine = state.machines.find((m) => m.id === oldId);
+  if (!machine) return false;
+  if (state.machines.some((m) => m.id === newId)) return false;
+  grid.removeMachine(oldId);
+  machine.id = newId;
+  grid.placeMachine(machine);
+  for (const c of state.connections) {
+    if (c.fromMachineId === oldId) c.fromMachineId = newId;
+    if (c.toMachineId === oldId) c.toMachineId = newId;
+  }
+  if (state.depotAssignments[oldId]) {
+    state.depotAssignments[newId] = state.depotAssignments[oldId]!;
+    delete state.depotAssignments[oldId];
+    saveDepotAssignments(state.depotAssignments);
+  }
+  return true;
 }
 
 export function removeMachineAt(x: number, y: number): void {

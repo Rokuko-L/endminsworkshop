@@ -53,6 +53,8 @@ same coordinate system as the domain model.
 | `ports(x?, y?)` | Every port cell (`portId`, side, `[input]`/`[output]`, kind, resource, adjacent tile) of one machine or all machines |
 | `power()` | Machines that are unpowered (outside every pylon AoE); `dump()` also tags them `[UNPOWERED]` |
 | `flow()` | Static flow solve: per-connection flow vs capacity (`[CLOGGED]`), per-machine efficiency, warnings (starved/stalled/cycle) — per-minute rates |
+| `plan(resource, rate, policyJson?)` | Quantify-only: the pure `selectProduction` Plan (steps + edges + inputs + notes + machine-readable `diagnostics`) as JSON — no grid touched |
+| `buildPlan(targetJson, policyJson?)` | Full pipeline: pure `buildPlan(target, policy)` materialized onto the live grid (place + route), returns a summary; inspect with `dump()` / `snapshot()` / `flow()` |
 
 Every action returns a human-readable string — the resulting status line,
 a small report, or `ERROR: ...` on failure — so a text-only agent never
@@ -79,6 +81,10 @@ that is the "sandbox" route when no browser is warranted:
 - [src/agent/dump.ts](../../src/agent/dump.ts) itself is pure (no DOM), so
   [test/agentDump.test.ts](../../test/agentDump.test.ts) can assert on the
   exact text an agent would see.
+- The whole planner (`src/planner/`) is pure —
+  [test/planner.test.ts](../../test/planner.test.ts) runs select →
+  expand → layout → assignPorts/route → buildPlan/validate headless,
+  including the Xiranite 30/min end-to-end.
 
 ## Extending the editor
 

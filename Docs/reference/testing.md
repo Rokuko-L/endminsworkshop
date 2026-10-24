@@ -17,7 +17,7 @@ npm run test:watch
 npm run typecheck
 ```
 
-The full suite is currently **38 tests** across three files.
+The full suite is currently **117 tests** across ten files (see table).
 
 ## What's Covered
 
@@ -26,6 +26,13 @@ The full suite is currently **38 tests** across three files.
 | `test/grid.test.ts` | `Grid` class: empty construction, `isWithinBounds`, `isFree`, `canPlace` for in-bounds / right-edge overflow / bottom-edge overflow / overlap, footprint fill on `placeMachine`, throw on invalid place, full clear on `removeMachine`, out-of-bounds reads, and `placeConnectionTiles` / `removeConnection` / `getConnectionAt` for the connection layer. |
 | `test/geometry.test.ts` | `rotateSide` for representative (side, orientation) pairs, `transformPort` and `getPortTile` for the Miner and Furnace at all four orientations, plus `getAdjacentTile` for the four cardinal directions and a non-zero machine origin. |
 | `test/pathfinding.test.ts` | `findPath`: same-cell start/end, straight horizontal and vertical paths, occupied start/end, routing around a wall of machines, fully enclosed destination, connection tiles as obstacles, and optimal Manhattan length. |
+| `test/planner.test.ts` | Planner pipeline: select (quantization, activation floors, byproducts, recycle loops, raw inputs, ban/prefer, loads, diagnostics) → expand (nodes, line fan-out) → layout (rows, depot layer, determinism) → assignPorts/route (purity, idempotence) → buildPlan/validate (per-step efficiency end-to-end). |
+| `test/flow.test.ts` | `solveFlow`: rate normalization, efficiency propagation, split/merge, clog/starve/stall/cycle/inactive warnings, gas min-flow gating. |
+| `test/connections.test.ts` | `completeDraft`: direction validation, resource inference, auto-bridging, colinear rejection, gas pipes. |
+| `test/agentDump.test.ts` | Agent text dump: ASCII map, machine/connection tables, JSON snapshot. |
+| `test/gas-catalog.test.ts` | Gas catalog spot-checks: extractor rates, disperser floors, ENV map, transmuters, tanks. |
+| `test/recipes.test.ts` / `test/recipeInfo.test.ts` | Recipe matching + recipe panel resolution. |
+| `test/grid.test.ts` | (existing — unchanged) |
 
 ## Conventions
 
